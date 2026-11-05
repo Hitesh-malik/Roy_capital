@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { presets, viewport } from "@/config/motion";
+import { enterStyle, presets, viewport } from "@/config/motion";
 import { cn } from "@/lib/utils/cn";
 
 type SplitHeadlineProps = {
@@ -30,13 +30,30 @@ export function SplitHeadline({
   delay = 0,
   stagger = 0.1,
 }: SplitHeadlineProps) {
+  if (trigger === "mount") {
+    // Above the fold: CSS keyframes start at first paint (no hydration wait → faster LCP).
+    const Tag = as;
+    return (
+      <Tag id={id} className={className}>
+        {lines.map((line, i) => (
+          <span key={i} className={cn("-mb-[0.12em] block overflow-hidden pb-[0.12em]", lineClassName)}>
+            <span className="animate-line-enter block" style={enterStyle(delay + i * stagger)}>
+              {line}
+            </span>
+          </span>
+        ))}
+      </Tag>
+    );
+  }
+
   const Comp = motion[as] as typeof motion.h2;
   return (
     <Comp
       id={id}
       className={className}
       initial="hidden"
-      {...(trigger === "mount" ? { animate: "visible" } : { whileInView: "visible", viewport })}
+      whileInView="visible"
+      viewport={viewport}
       variants={presets.staggerReveal(stagger, delay)}
     >
       {lines.map((line, i) => (

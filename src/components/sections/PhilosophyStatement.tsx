@@ -19,7 +19,7 @@ export function PhilosophyStatement({ lines, className }: { lines: string[]; cla
         gsap.utils.toArray<HTMLElement>("[data-line]").forEach((line) => {
           gsap.fromTo(
             line,
-            { opacity: 0.18 },
+            { opacity: scrollMotion.dim.display },
             {
               opacity: 1,
               ease: "none",

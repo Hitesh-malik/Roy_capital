@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { durations, ease } from "@/config/motion";
+import { durations, ease, enterStyle } from "@/config/motion";
 import { headerCta, primaryNav } from "@/content/navigation";
 import { site } from "@/config/site";
 import { cn } from "@/lib/utils/cn";
@@ -49,12 +49,11 @@ export function Header() {
     <>
       <motion.header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-(--rc-motion-medium) ease-premium",
+          "animate-enter fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-(--rc-motion-medium) ease-premium",
           scrolled || menuOpen ? "border-line/70 bg-bg/80 backdrop-blur-xl" : "border-transparent bg-transparent",
         )}
-        style={{ viewTransitionName: "site-header" }}
-        initial={{ y: -24, opacity: 0 }}
-        animate={{ y: hidden ? "-100%" : 0, opacity: 1 }}
+        style={{ viewTransitionName: "site-header", ...enterStyle(0, -16) }}
+        animate={{ y: hidden ? "-100%" : 0 }}
         transition={{ duration: durations.medium, ease: ease.premium }}
       >
         <Container className="flex h-18 items-center justify-between gap-6 lg:h-20">

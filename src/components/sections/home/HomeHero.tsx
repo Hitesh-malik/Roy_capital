@@ -45,22 +45,22 @@ export function HomeHero() {
 
       <Container className="relative grid min-h-svh items-center gap-6 pt-32 pb-28 lg:grid-cols-12 lg:pt-28">
         <div data-hero-copy className="relative z-10 lg:col-span-8">
-          <Reveal immediate delay={0.15}>
+          <Reveal immediate delay={0.05}>
             <Eyebrow className="flex-wrap">{h.eyebrow}</Eyebrow>
           </Reveal>
           <SplitHeadline
             id="hero-title"
             as="h1"
             trigger="mount"
-            delay={0.3}
-            stagger={0.14}
+            delay={0.15}
+            stagger={0.12}
             lines={[h.lines[0], <Em key="em">{h.lines[1]}</Em>]}
             className="mt-8 font-heading text-display font-semibold text-fg"
           />
-          <Reveal immediate delay={0.75} className="mt-7 max-w-xl">
+          <Reveal immediate delay={0.45} className="mt-7 max-w-xl">
             <Text size="lead">{h.body}</Text>
           </Reveal>
-          <Reveal immediate delay={0.9} className="mt-10 flex flex-wrap items-center gap-4">
+          <Reveal immediate delay={0.6} className="mt-10 flex flex-wrap items-center gap-4">
             <ButtonLink href={h.primary.href} size="lg" magnetic>
               {h.primary.label}
             </ButtonLink>
@@ -71,8 +71,8 @@ export function HomeHero() {
         </div>
 
         <div className="relative mx-auto aspect-square w-full max-w-md lg:absolute lg:top-1/2 lg:right-[-6%] lg:mx-0 lg:w-[56%] lg:max-w-none lg:-translate-y-1/2">
-          <HeroScene progress={progress} className="h-full w-full" delay={1} />
-          <Reveal immediate delay={1.3} className="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden>
+          <HeroScene progress={progress} className="h-full w-full" delay={0.75} />
+          <Reveal immediate delay={1.1} className="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden>
             {h.labels.map((label, i) => (
               <span
                 key={label}
@@ -89,13 +89,13 @@ export function HomeHero() {
       </Container>
 
       <Container data-hero-meta className="pointer-events-none absolute inset-x-0 bottom-8 flex items-end justify-between">
-        <Reveal immediate delay={1.4} className="flex items-center gap-4 text-label font-medium uppercase text-subtle">
+        <Reveal immediate delay={1.2} className="flex items-center gap-4 text-label font-medium uppercase text-subtle">
           <span aria-hidden className="relative block h-12 w-px overflow-hidden bg-line">
             <span className="animate-scroll-cue absolute inset-x-0 top-0 h-1/2 bg-accent-soft" />
           </span>
           Scroll to explore
         </Reveal>
-        <Reveal immediate delay={1.4} className="hidden text-label font-medium uppercase text-subtle sm:block">
+        <Reveal immediate delay={1.2} className="hidden text-label font-medium uppercase text-subtle sm:block">
           Knowledge · Perspective · Purpose
         </Reveal>
       </Container>

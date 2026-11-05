@@ -40,7 +40,7 @@ export function ProcessFlow({ steps }: { steps: Step[] }) {
             >
               {s.number}
             </span>
-            <div className="transition-opacity duration-(--rc-motion-slow) ease-premium group-data-[active=false]/step:opacity-45 lg:mt-4">
+            <div className="transition-opacity duration-(--rc-motion-slow) ease-premium group-data-[active=false]/step:opacity-70 lg:mt-4">
               <h3 className="font-heading text-h4 font-semibold text-fg">{s.title}</h3>
               <p className="mt-2 text-muted lg:mx-auto lg:max-w-[16rem]">{s.body}</p>
             </div>

@@ -45,8 +45,8 @@ export function ApproachTimeline() {
               >
                 {step.number}
               </span>
-              <div className="pt-1.5 transition-opacity duration-(--rc-motion-slow) ease-premium group-data-[active=false]/step:opacity-40">
-                <p className="text-label font-medium uppercase text-subtle">Stage {i + 1}</p>
+              <div className="pt-1.5 transition-opacity duration-(--rc-motion-slow) ease-premium group-data-[active=false]/step:opacity-70">
+                <p className="text-label font-medium uppercase text-muted">Stage {i + 1}</p>
                 <h3 className="mt-2 font-heading text-h2 font-semibold text-fg">{step.title}</h3>
                 <p className="mt-4 max-w-md text-muted">{step.body}</p>
               </div>

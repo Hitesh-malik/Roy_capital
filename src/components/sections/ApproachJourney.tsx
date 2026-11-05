@@ -42,7 +42,7 @@ export function ApproachJourney() {
           );
           gsap.fromTo(
             step,
-            { opacity: 0.3 },
+            { opacity: scrollMotion.dim.text },
             {
               opacity: 1,
               ease: "none",

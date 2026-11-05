@@ -1,9 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { motion, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { durations, ease } from "@/config/motion";
+import { enterStyle } from "@/config/motion";
 import { useMediaQuery, useWebGLSupport } from "@/lib/hooks/useMediaQuery";
 import { cn } from "@/lib/utils/cn";
 import { CoreFallback } from "@/components/visuals/CoreFallback";
@@ -20,10 +20,33 @@ function onIdle(cb: () => void, timeout = 1800) {
   return () => clearTimeout(id);
 }
 
+/** Resolve on the visitor's first interaction (touch, scroll, key, pointer). */
+function onFirstInteraction(cb: () => void) {
+  const events = ["pointerdown", "touchstart", "keydown", "wheel", "scroll"] as const;
+  const fire = () => {
+    events.forEach((e) => window.removeEventListener(e, fire));
+    cb();
+  };
+  events.forEach((e) => window.addEventListener(e, fire, { once: true, passive: true }));
+  return () => events.forEach((e) => window.removeEventListener(e, fire));
+}
+
+/** Touch-first, low-core, low-memory or data-saver devices. */
+function isConstrained() {
+  const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
+  return (
+    window.matchMedia("(pointer: coarse)").matches ||
+    (nav.hardwareConcurrency ?? 8) <= 4 ||
+    (nav.deviceMemory ?? 8) <= 4 ||
+    nav.connection?.saveData === true
+  );
+}
+
 /**
  * Loads the WebGL Intelligence Core over a matching static SVG.
- * - The three.js bundle is only requested once the browser is idle after
- *   hydration, so it never competes with LCP or first input.
+ * - The three.js bundle is requested once the browser is idle after
+ *   hydration (desktop), or on first interaction on constrained devices —
+ *   so it never competes with LCP or first input.
  * - Reduced motion or no WebGL → static fallback only.
  * - Rendering pauses when the hero is off-screen.
  * - Lower geometry / DPR on small or low-core devices.
@@ -56,7 +79,10 @@ export function HeroScene({
     [],
   );
 
-  useEffect(() => onIdle(() => setIdle(true)), []);
+  useEffect(() => {
+    const load = () => setIdle(true);
+    return isConstrained() ? onFirstInteraction(() => onIdle(load)) : onIdle(load);
+  }, []);
 
   useEffect(() => {
     const el = ref.current;
@@ -78,13 +104,7 @@ export function HeroScene({
   const use3D = idle && webgl === true && reduced === false;
 
   return (
-    <motion.div
-      ref={ref}
-      className={cn("relative", className)}
-      initial={{ opacity: 0, scale: 0.94 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: durations.slower, ease: ease.premium, delay }}
-    >
+    <div ref={ref} className={cn("animate-enter relative", className)} style={enterStyle(delay, 0)}>
       <div
         className={cn(
           "absolute inset-0 transition-opacity duration-(--rc-motion-slower) ease-premium",
@@ -111,6 +131,6 @@ export function HeroScene({
           />
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }
