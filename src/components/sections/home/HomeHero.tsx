@@ -20,13 +20,13 @@ export function HomeHero() {
   const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
 
   return (
-    <section ref={ref} aria-labelledby="hero-title" className="grain relative isolate overflow-hidden">
+    <section ref={ref} aria-labelledby="hero-title" className="relative isolate overflow-hidden">
       <div aria-hidden className="arch-grid absolute inset-0 -z-10" />
       <div aria-hidden className="radial-light absolute inset-0 -z-10" />
-      <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-b from-transparent to-bg" />
+      <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-48 bg-linear-to-b from-transparent to-bg" />
 
-      <Container className="relative grid min-h-[100svh] items-center gap-6 pt-32 pb-28 lg:grid-cols-12 lg:pt-28">
-        <motion.div style={reduced ? undefined : { y, opacity }} className="relative z-10 lg:col-span-7">
+      <Container className="relative grid min-h-svh items-center gap-6 pt-32 pb-28 lg:grid-cols-12 lg:pt-28">
+        <motion.div style={reduced ? undefined : { y, opacity }} className="relative z-10 lg:col-span-8">
           <Reveal immediate delay={0.15}>
             <Eyebrow className="flex-wrap">{h.eyebrow}</Eyebrow>
           </Reveal>
@@ -39,7 +39,7 @@ export function HomeHero() {
             lines={[h.lines[0], <Em key="em">{h.lines[1]}</Em>]}
             className="mt-8 font-heading text-display font-semibold text-fg"
           />
-          <Reveal immediate delay={0.75} className="mt-8 max-w-xl">
+          <Reveal immediate delay={0.75} className="mt-7 max-w-xl">
             <Text size="lead">{h.body}</Text>
           </Reveal>
           <Reveal immediate delay={0.9} className="mt-10 flex flex-wrap items-center gap-4">
@@ -59,7 +59,7 @@ export function HomeHero() {
               <span
                 key={label}
                 className="absolute flex items-center gap-2 text-label font-medium uppercase text-subtle"
-                style={[{ top: "16%", left: "8%" }, { top: "48%", right: "4%" }, { bottom: "14%", left: "22%" }][i]}
+                style={[{ top: "10%", right: "14%" }, { top: "50%", right: "0%" }, { bottom: "10%", right: "26%" }][i]}
               >
                 <span className="text-accent-soft tabular-nums">0{i + 1}</span>
                 <span aria-hidden className="h-px w-6 bg-line-strong" />

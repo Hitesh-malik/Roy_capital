@@ -39,7 +39,7 @@ export function LearningAreas() {
             >
               <span
                 aria-hidden
-                className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-accent to-accent-soft transition-transform duration-(--rc-motion-slow) ease-premium group-hover:scale-x-100"
+                className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-linear-to-r from-accent to-accent-soft transition-transform duration-(--rc-motion-slow) ease-premium group-hover:scale-x-100"
               />
               <div className="flex items-start justify-between">
                 <span className="font-heading text-h3 font-semibold tabular-nums text-subtle transition-colors group-hover:text-accent-soft">

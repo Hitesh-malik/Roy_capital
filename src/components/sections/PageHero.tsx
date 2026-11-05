@@ -17,7 +17,7 @@ type PageHeroProps = {
 /** Editorial hero used by every inner page. */
 export function PageHero({ eyebrow, title, lead, body, actions, visual, className }: PageHeroProps) {
   return (
-    <section className={cn("grain relative isolate overflow-hidden pt-36 pb-section-tight lg:pt-44", className)}>
+    <section className={cn("relative isolate overflow-hidden pt-36 pb-section-tight lg:pt-44", className)}>
       <div aria-hidden className="arch-grid absolute inset-0 -z-10" />
       <div aria-hidden className="radial-light absolute inset-0 -z-10" />
       <Container className={cn("grid items-end gap-14", visual && "lg:grid-cols-12")}>

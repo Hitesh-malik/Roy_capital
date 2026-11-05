@@ -32,6 +32,7 @@ export function CommunityVideo({ className }: { className?: string }) {
 
   return (
     <figure className={cn("relative mx-auto w-full max-w-[400px]", className)}>
+      <div className="relative">
       {/* Architectural frame ticks */}
       <span aria-hidden className="absolute -top-3 -left-3 size-6 border-t border-l border-accent-soft/50" />
       <span aria-hidden className="absolute -right-3 -bottom-3 size-6 border-r border-b border-accent-soft/50" />
@@ -66,7 +67,7 @@ export function CommunityVideo({ className }: { className?: string }) {
               transition={{ duration: durations.medium, ease: ease.premium }}
               aria-label={`Play film: ${communityVideo.title}`}
             >
-              <span aria-hidden className="absolute inset-0 -z-0 bg-gradient-to-b from-arch via-bg-2 to-bg" />
+              <span aria-hidden className="absolute inset-0 -z-0 bg-linear-to-b from-arch via-bg-2 to-bg" />
               <span aria-hidden className="arch-grid absolute inset-0 opacity-50" />
               <span aria-hidden className="absolute inset-x-0 top-1/2 aspect-square -translate-y-1/2 scale-125 opacity-60">
                 <CoreFallback />
@@ -87,6 +88,7 @@ export function CommunityVideo({ className }: { className?: string }) {
             </motion.button>
           )}
         </AnimatePresence>
+      </div>
       </div>
       <figcaption className="mt-5 text-small text-subtle">{communityVideo.body}</figcaption>
     </figure>

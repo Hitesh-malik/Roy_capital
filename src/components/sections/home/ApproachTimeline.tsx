@@ -36,7 +36,7 @@ export function ApproachTimeline() {
           <span aria-hidden className="absolute top-2 bottom-2 left-[1.4rem] w-px bg-line" />
           <motion.span
             aria-hidden
-            className="absolute top-2 bottom-2 left-[1.4rem] w-px origin-top bg-gradient-to-b from-accent to-accent-soft"
+            className="absolute top-2 bottom-2 left-[1.4rem] w-px origin-top bg-linear-to-b from-accent to-accent-soft"
             style={{ scaleY: reduced ? 1 : scaleY }}
           />
           {approachSteps.map((step, i) => (

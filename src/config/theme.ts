@@ -95,7 +95,7 @@ const sharedTypography: Theme["typography"] = {
   },
   weights: { regular: 400, medium: 500, semibold: 600, bold: 700 },
   scale: {
-    display: ["clamp(2.75rem, 1.6rem + 5.2vw, 6.25rem)", "1.02", "-0.035em"],
+    display: ["clamp(2.6rem, 1.5rem + 4.2vw, 5rem)", "1.02", "-0.035em"],
     h1: ["clamp(2.5rem, 1.7rem + 3.6vw, 4.75rem)", "1.05", "-0.03em"],
     h2: ["clamp(2rem, 1.45rem + 2.4vw, 3.5rem)", "1.08", "-0.025em"],
     h3: ["clamp(1.375rem, 1.15rem + 0.9vw, 1.875rem)", "1.2", "-0.015em"],

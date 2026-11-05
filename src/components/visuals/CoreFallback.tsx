@@ -5,7 +5,7 @@ const C = 300;
 const hex = (r: number, offset = -90) =>
   Array.from({ length: 6 }, (_, i) => {
     const a = ((offset + i * 60) * Math.PI) / 180;
-    return [C + r * Math.cos(a), C + r * Math.sin(a)] as const;
+    return [Math.round((C + r * Math.cos(a)) * 100) / 100, Math.round((C + r * Math.sin(a)) * 100) / 100] as const;
   });
 
 const outer = hex(96);

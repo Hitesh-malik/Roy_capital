@@ -28,7 +28,7 @@ export function ClosingCta({
 }: ClosingCtaProps) {
   return (
     <Section>
-      <div className="relative isolate overflow-hidden rounded-[calc(var(--rc-radius-media)*1.6)] border border-line bg-gradient-to-br from-surface via-bg-2 to-bg px-6 py-20 sm:px-12 md:px-16 md:py-28">
+      <div className="relative isolate overflow-hidden rounded-[calc(var(--rc-radius-media)*1.6)] border border-line bg-linear-to-br from-surface via-bg-2 to-bg px-6 py-20 sm:px-12 md:px-16 md:py-28">
         <div aria-hidden className="arch-grid absolute inset-0 -z-10 opacity-60" />
         <div
           aria-hidden

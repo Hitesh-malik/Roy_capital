@@ -80,7 +80,7 @@ export function GeometricPanel({ motif, className, label }: { motif: ProgramMoti
   return (
     <div
       className={cn(
-        "relative isolate overflow-hidden rounded-media border border-line bg-gradient-to-b from-surface/60 to-bg-2",
+        "relative isolate overflow-hidden rounded-media border border-line bg-linear-to-b from-surface/60 to-bg-2",
         className,
       )}
     >
