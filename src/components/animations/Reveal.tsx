@@ -1,7 +1,8 @@
 "use client";
 
 import { motion, useReducedMotion, type Variants } from "motion/react";
-import { presets, viewport } from "@/config/motion";
+import { enterStyle, presets, viewport } from "@/config/motion";
+import { cn } from "@/lib/utils/cn";
 
 type Tag = "div" | "section" | "article" | "li" | "ul" | "ol" | "p" | "span" | "figure" | "header";
 
@@ -9,19 +10,31 @@ type RevealProps = React.HTMLAttributes<HTMLElement> & {
   as?: Tag;
   delay?: number;
   distance?: number;
-  /** Animate on mount instead of when scrolled into view. */
+  /** Above-the-fold: animate on first paint (CSS) instead of when scrolled into view. */
   immediate?: boolean;
 };
 
 /** Fade + rise into view. Reduced motion → opacity only (via MotionConfig). */
-export function Reveal({ as = "div", delay = 0, distance, immediate, children, ...props }: RevealProps) {
+export function Reveal({ as = "div", delay = 0, distance, immediate, children, className, style, ...props }: RevealProps) {
+  if (immediate) {
+    // Above the fold: CSS keyframes start at first paint (no hydration wait → faster LCP).
+    const Tag = as as React.ElementType;
+    return (
+      <Tag className={cn("animate-enter", className)} style={{ ...enterStyle(delay, distance), ...style }} {...props}>
+        {children}
+      </Tag>
+    );
+  }
   const Comp = motion[as] as typeof motion.div;
   return (
     <Comp
       data-reveal
       variants={presets.slideReveal(distance, delay)}
       initial="hidden"
-      {...(immediate ? { animate: "visible" } : { whileInView: "visible", viewport })}
+      whileInView="visible"
+      viewport={viewport}
+      className={className}
+      style={style as React.ComponentProps<typeof motion.div>["style"]}
       {...(props as React.ComponentProps<typeof motion.div>)}
     >
       {children}

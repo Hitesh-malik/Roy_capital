@@ -109,7 +109,20 @@ export const scrollMotion = {
   /** Equivalent of `ease.premium` for GSAP tweens. */
   ease: "power3.out",
   heroExit: { y: -90 * k, fadeEnd: 0.75 },
+  /**
+   * Lowest opacity for "not yet reached" text in scroll sequences. Chosen so
+   * dimmed text still meets WCAG AA (body 4.5:1, large display text 3:1).
+   */
+  dim: { text: 0.7, display: 0.5 },
 };
+
+/**
+ * CSS-driven entrance for above-the-fold content (see `animate-enter` in
+ * globals.css). Starts at first paint instead of after hydration, which keeps
+ * LCP fast. Below-the-fold reveals use Motion's `whileInView`.
+ */
+export const enterStyle = (delay = 0, distance: number = m.distance.md) =>
+  ({ "--rc-delay": `${delay}s`, "--rc-enter-distance": `${travel(distance)}px` }) as React.CSSProperties;
 
 /** Lenis smooth scrolling. Touch devices and reduced-motion users always keep native scroll. */
 export const smoothScroll = {
