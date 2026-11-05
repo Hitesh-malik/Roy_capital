@@ -23,7 +23,7 @@ export function SmoothScroll() {
     const lenis = new Lenis({
       lerp: smoothScroll.lerp,
       wheelMultiplier: smoothScroll.wheelMultiplier,
-      anchors: true,
+      anchors: false, // in-page hash links are handled below
       autoToggle: true, // pauses while <html> is overflow:hidden (mobile menu)
       allowNestedScroll: true,
       stopInertiaOnNavigate: true,
@@ -34,7 +34,27 @@ export function SmoothScroll() {
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
+    // Same-page hash links: smooth-scroll (honours CSS scroll-margin-top), keep
+    // the URL in sync, then move focus to the target for keyboard / AT users.
+    const onClick = (e: MouseEvent) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const link = (e.target as Element | null)?.closest<HTMLAnchorElement>('a[href^="#"]');
+      const id = link ? decodeURIComponent(link.hash.slice(1)) : "";
+      const target = id ? document.getElementById(id) : null;
+      if (!link || !target) return;
+      e.preventDefault();
+      history.pushState(history.state, "", link.hash);
+      lenis.scrollTo(target, {
+        onComplete: () => {
+          if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+          target.focus({ preventScroll: true });
+        },
+      });
+    };
+    document.addEventListener("click", onClick);
+
     return () => {
+      document.removeEventListener("click", onClick);
       gsap.ticker.remove(tick);
       lenis.destroy();
     };

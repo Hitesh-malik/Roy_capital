@@ -52,11 +52,35 @@ export function buttonClasses({ variant = "primary", size = "md", className }: P
 
 type ButtonLinkProps = CommonProps & Omit<React.ComponentProps<typeof Link>, "className" | "children">;
 
+type LinkProps = React.ComponentProps<typeof Link>;
+
+/**
+ * In-page hash links (`#enquiry`) render as plain anchors so a single owner
+ * handles them: Lenis (via SmoothScroll) when active, otherwise the browser.
+ * Everything else is a Next.js <Link>.
+ */
+function SmartLink({ href, children, ...props }: LinkProps) {
+  if (typeof href === "string" && href.startsWith("#")) {
+    const { prefetch: _p, replace: _r, scroll: _s, onNavigate: _n, transitionTypes: _t, ...anchor } = props;
+    void [_p, _r, _s, _n, _t];
+    return (
+      <a href={href} {...(anchor as React.AnchorHTMLAttributes<HTMLAnchorElement>)}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} {...props}>
+      {children}
+    </Link>
+  );
+}
+
 export function ButtonLink({ variant, size, icon, magnetic, className, children, ...props }: ButtonLinkProps) {
   const link = (
-    <Link className={buttonClasses({ variant, size, className })} {...props}>
+    <SmartLink className={buttonClasses({ variant, size, className })} {...props}>
       <Inner icon={icon}>{children}</Inner>
-    </Link>
+    </SmartLink>
   );
   return magnetic ? <Magnetic>{link}</Magnetic> : link;
 }
@@ -79,7 +103,7 @@ export function ArrowLink({
   ...props
 }: Omit<React.ComponentProps<typeof Link>, "className"> & { className?: string }) {
   return (
-    <Link
+    <SmartLink
       className={cn(
         "group/link inline-flex items-center gap-2 font-heading text-small font-semibold uppercase tracking-[0.12em] text-fg transition-colors duration-(--rc-motion-medium) hover:text-accent-soft",
         className,
@@ -94,6 +118,6 @@ export function ArrowLink({
         className="size-4 transition-transform duration-(--rc-motion-medium) ease-premium group-hover/link:translate-x-1"
         strokeWidth={1.75}
       />
-    </Link>
+    </SmartLink>
   );
 }

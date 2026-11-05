@@ -137,7 +137,7 @@ const midnight: Theme = {
     warm: "#D2B98B",
     text: "#E8F0FA",
     textMuted: "#A2B1C6",
-    textSubtle: "#7385A0",
+    textSubtle: "#7C8EA9",
     border: "#263951",
     borderStrong: "#3A5373",
     contrast: "#FFFFFF",

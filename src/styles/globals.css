@@ -120,6 +120,11 @@
     scroll-margin-top: 6.5rem;
   }
 
+  /* Programmatic focus targets (skip link, anchor jumps) shouldn't draw a giant ring. */
+  [tabindex="-1"]:focus {
+    outline: none;
+  }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
