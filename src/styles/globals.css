@@ -1,0 +1,209 @@
+@import "tailwindcss";
+
+/*
+ * Tailwind utilities mapped to the design tokens in src/config/theme.ts.
+ * Raw values are emitted as --rc-* variables by <ThemeStyle />.
+ * Never add hex values here — add a token to theme.ts instead.
+ */
+@theme inline {
+  --color-*: initial;
+  --color-bg: var(--rc-color-bg);
+  --color-bg-2: var(--rc-color-bg-secondary);
+  --color-surface: var(--rc-color-surface);
+  --color-arch: var(--rc-color-architectural);
+  --color-accent: var(--rc-color-accent);
+  --color-accent-soft: var(--rc-color-accent-soft);
+  --color-on-accent: var(--rc-color-on-accent);
+  --color-warm: var(--rc-color-warm);
+  --color-fg: var(--rc-color-text);
+  --color-muted: var(--rc-color-text-muted);
+  --color-subtle: var(--rc-color-text-subtle);
+  --color-line: var(--rc-color-border);
+  --color-line-strong: var(--rc-color-border-strong);
+  --color-contrast: var(--rc-color-contrast);
+  --color-danger: var(--rc-color-danger);
+
+  --font-*: initial;
+  --font-heading: var(--rc-font-heading);
+  --font-body: var(--rc-font-body);
+  --font-display: var(--rc-font-display);
+
+  --text-display: var(--rc-text-display);
+  --text-display--line-height: var(--rc-text-display-lh);
+  --text-display--letter-spacing: var(--rc-text-display-ls);
+  --text-h1: var(--rc-text-h1);
+  --text-h1--line-height: var(--rc-text-h1-lh);
+  --text-h1--letter-spacing: var(--rc-text-h1-ls);
+  --text-h2: var(--rc-text-h2);
+  --text-h2--line-height: var(--rc-text-h2-lh);
+  --text-h2--letter-spacing: var(--rc-text-h2-ls);
+  --text-h3: var(--rc-text-h3);
+  --text-h3--line-height: var(--rc-text-h3-lh);
+  --text-h3--letter-spacing: var(--rc-text-h3-ls);
+  --text-h4: var(--rc-text-h4);
+  --text-h4--line-height: var(--rc-text-h4-lh);
+  --text-h4--letter-spacing: var(--rc-text-h4-ls);
+  --text-lead: var(--rc-text-lead);
+  --text-lead--line-height: var(--rc-text-lead-lh);
+  --text-lead--letter-spacing: var(--rc-text-lead-ls);
+  --text-body: var(--rc-text-body);
+  --text-body--line-height: var(--rc-text-body-lh);
+  --text-small: var(--rc-text-small);
+  --text-small--line-height: var(--rc-text-small-lh);
+  --text-label: var(--rc-text-label);
+  --text-label--line-height: var(--rc-text-label-lh);
+  --text-label--letter-spacing: var(--rc-text-label-ls);
+
+  --container-site: var(--rc-container);
+  --spacing-gutter: var(--rc-gutter);
+  --spacing-section: var(--rc-section);
+  --spacing-section-tight: var(--rc-section-tight);
+
+  --radius-card: var(--rc-radius-card);
+  --radius-button: var(--rc-radius-button);
+  --radius-input: var(--rc-radius-input);
+  --radius-media: var(--rc-radius-media);
+
+  --shadow-card: var(--rc-shadow-card);
+  --shadow-lift: var(--rc-shadow-lift);
+  --shadow-glow: var(--rc-shadow-glow);
+
+  --ease-premium: var(--rc-ease-premium);
+  --ease-in-out: var(--rc-ease-in-out);
+}
+
+@layer base {
+  html {
+    background-color: var(--rc-color-bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  html[data-menu-open="true"] {
+    overflow: hidden;
+  }
+
+  body {
+    background-color: var(--rc-color-bg);
+    color: var(--rc-color-text);
+    font-family: var(--rc-font-body);
+    font-size: var(--rc-text-body);
+    line-height: var(--rc-text-body-lh);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--rc-font-heading);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--rc-color-accent) 40%, transparent);
+    color: var(--rc-color-contrast);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--rc-color-accent);
+    outline-offset: 3px;
+  }
+
+  [id] {
+    scroll-margin-top: 6.5rem;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* Fine architectural grid with a soft radial falloff. */
+@utility arch-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--rc-color-border) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--rc-color-border) 55%, transparent) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 70% 60% at 60% 40%, black 10%, transparent 75%);
+}
+
+/* Restrained radial blue light. */
+@utility radial-light {
+  background-image: radial-gradient(
+    ellipse 55% 50% at 70% 35%,
+    color-mix(in oklab, var(--rc-color-accent) 16%, transparent),
+    transparent 70%
+  );
+}
+
+/* Very subtle film grain for depth on large dark fields. */
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Thin gradient hairline used as a section divider. */
+@utility hairline {
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    var(--rc-color-border-strong) 20%,
+    var(--rc-color-border-strong) 80%,
+    transparent
+  );
+}
+
+@keyframes rc-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rc-scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+@utility animate-spin-slow {
+  animation: rc-spin 90s linear infinite;
+}
+
+@utility animate-spin-slower {
+  animation: rc-spin 140s linear infinite reverse;
+}
+
+@utility animate-scroll-cue {
+  animation: rc-scroll-cue 2.2s var(--rc-ease-in-out) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,67 @@
+export const homePage = {
+  hero: {
+    eyebrow: "Financial Education · Investment Awareness · Entrepreneurship",
+    lines: ["Building Financial Intelligence.", "Creating a Better Tomorrow."],
+    body: "At Roy Capital, we connect financial knowledge, investment awareness and entrepreneurial thinking to encourage a broader understanding of money, markets and business.",
+    primary: { label: "Explore Partnerships", href: "/sponsorships" },
+    secondary: { label: "Discover Roy Capital", href: "/about" },
+    labels: ["Knowledge", "Perspective", "Purpose"],
+  },
+  intro: {
+    eyebrow: "More Than Just Finance",
+    title: "Knowledge. Perspective. Purpose.",
+    lead: "A broader perspective on the financial world.",
+    body: "Finance is not just about numbers, charts or investments. It is about understanding how the world works, how businesses grow and how financial decisions shape our future. At Roy Capital, we bring these ideas together through a learning experience designed to make complex financial topics easier to understand.",
+    pillars: [
+      { title: "Knowledge", body: "Help people understand finance, markets and business through clear learning." },
+      { title: "Perspective", body: "Encourage informed thinking about investments, entrepreneurship and financial decisions." },
+      { title: "Purpose", body: "Connect growth with responsibility and community contribution." },
+    ],
+    cta: { label: "Discover Our Philosophy", href: "/approach" },
+  },
+  learning: {
+    eyebrow: "Our Learning Areas",
+    title: "Knowledge That Moves You Forward.",
+    body: "We focus on three essential areas that help build a stronger understanding of the financial and business world.",
+    cta: { label: "View All Programs", href: "/programs" },
+  },
+  sponsorship: {
+    eyebrow: "Sponsorships & Partnerships",
+    title: "Let's Build Meaningful Partnerships.",
+    body: "Roy Capital welcomes conversations with brands, organisations and collaborators whose goals align with financial education, entrepreneurship and community contribution.",
+    points: ["Educational collaborations", "Brand sponsorships", "Content partnerships", "Community initiatives"],
+    primary: { label: "Become a Partner", href: "/sponsorships" },
+    secondary: { label: "How collaboration works", href: "/sponsorships#process" },
+  },
+  approach: {
+    eyebrow: "The Roy Capital Approach",
+    title: "Learn with Clarity. Think with Confidence.",
+    body: "We believe that meaningful learning starts with understanding, not complexity. Our approach is built around making financial knowledge accessible, encouraging thoughtful questions and helping people develop a balanced perspective.",
+    cta: { label: "Explore Our Approach", href: "/approach" },
+  },
+  philosophy: {
+    eyebrow: "Our Philosophy",
+    lines: ["Clarity Over Complexity.", "Perspective Over Hype."],
+    body: "We want financial education to feel approachable, relevant and meaningful — encouraging people to be curious enough to learn, confident enough to ask questions and thoughtful enough to evaluate decisions.",
+  },
+  philanthropy: {
+    eyebrow: "Growth with Purpose",
+    title: "Success Means Giving Back.",
+    body: "At Roy Capital, we believe that success carries a responsibility. As we grow, we intend to dedicate a part of our profits towards philanthropic initiatives that support people, create opportunities and strengthen communities.",
+    quote: "True progress is not measured only by what we achieve, but also by the positive difference we make.",
+    cta: { label: "Our Philanthropic Initiatives", href: "/philanthropy" },
+  },
+  community: {
+    eyebrow: "Community & Impact",
+    title: "Small Actions. Meaningful Change.",
+    body: "Our community initiatives reflect our belief in creating a positive impact beyond business. Through meaningful engagement and philanthropic efforts, we aim to contribute to causes that bring support, opportunity and hope to people who need it.",
+    cta: { label: "See Our Community Initiatives", href: "/impact" },
+  },
+  closing: {
+    eyebrow: "Partner with Roy Capital",
+    title: "Let's Create Something Meaningful Together.",
+    body: "Whether you represent a brand, an organisation or an initiative that shares our belief in financial knowledge and purposeful growth, we would be glad to start a conversation.",
+    primary: { label: "Discuss a Partnership", href: "/sponsorships#enquiry" },
+    secondary: { label: "Contact Roy Capital", href: "/contact" },
+  },
+};
