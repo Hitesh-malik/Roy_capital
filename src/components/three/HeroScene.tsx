@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { motion, useReducedMotion, type MotionValue } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { durations, ease } from "@/config/motion";
 import { useMediaQuery, useWebGLSupport } from "@/lib/hooks/useMediaQuery";
@@ -10,18 +10,39 @@ import { CoreFallback } from "@/components/visuals/CoreFallback";
 
 const IntelligenceCore = dynamic(() => import("./IntelligenceCore"), { ssr: false });
 
+/** Resolve once the main thread is idle (or after `timeout` ms at the latest). */
+function onIdle(cb: () => void, timeout = 1800) {
+  if ("requestIdleCallback" in window) {
+    const id = window.requestIdleCallback(cb, { timeout });
+    return () => window.cancelIdleCallback(id);
+  }
+  const id = setTimeout(cb, 600);
+  return () => clearTimeout(id);
+}
+
 /**
- * Loads the WebGL Intelligence Core lazily over a matching static SVG.
+ * Loads the WebGL Intelligence Core over a matching static SVG.
+ * - The three.js bundle is only requested once the browser is idle after
+ *   hydration, so it never competes with LCP or first input.
  * - Reduced motion or no WebGL → static fallback only.
  * - Rendering pauses when the hero is off-screen.
- * - Lower geometry/DPR on small or low-core devices.
+ * - Lower geometry / DPR on small or low-core devices.
  */
-export function HeroScene({ progress, className, delay = 0.55 }: { progress: MotionValue<number>; className?: string; delay?: number }) {
+export function HeroScene({
+  progress,
+  className,
+  delay = 0.55,
+}: {
+  progress: React.RefObject<number>;
+  className?: string;
+  delay?: number;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const pointer = useRef({ x: 0, y: 0 });
   const reduced = useReducedMotion();
   const webgl = useWebGLSupport();
   const small = useMediaQuery("(max-width: 767px)");
+  const [idle, setIdle] = useState(false);
   const [inView, setInView] = useState(true);
   const [ready, setReady] = useState(false);
   // A fresh <canvas> each time the route is re-shown by Activity (its GL context is released on hide).
@@ -34,6 +55,8 @@ export function HeroScene({ progress, className, delay = 0.55 }: { progress: Mot
     },
     [],
   );
+
+  useEffect(() => onIdle(() => setIdle(true)), []);
 
   useEffect(() => {
     const el = ref.current;
@@ -52,7 +75,7 @@ export function HeroScene({ progress, className, delay = 0.55 }: { progress: Mot
   }, []);
 
   const lowCores = typeof navigator !== "undefined" && (navigator.hardwareConcurrency ?? 8) <= 4;
-  const use3D = webgl === true && reduced === false;
+  const use3D = idle && webgl === true && reduced === false;
 
   return (
     <motion.div
@@ -68,7 +91,7 @@ export function HeroScene({ progress, className, delay = 0.55 }: { progress: Mot
           use3D && ready ? "opacity-0" : "opacity-100",
         )}
       >
-        <CoreFallback animated={!reduced} />
+        <CoreFallback />
       </div>
 
       {use3D && (

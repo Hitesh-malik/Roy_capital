@@ -1,10 +1,10 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
-import { parallax } from "@/config/motion";
+import { parallax, scrollMotion } from "@/config/motion";
+import { gsap, useGSAP } from "@/lib/gsap";
 
-/** Moves its children slightly against the scroll direction. */
+/** Moves its children slightly against the scroll direction (GSAP-scrubbed). */
 export function Parallax({
   children,
   className,
@@ -16,12 +16,26 @@ export function Parallax({
   speed?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [parallax.range * speed, -parallax.range * speed]);
+
+  useGSAP(() => {
+    const mm = gsap.matchMedia();
+    mm.add(scrollMotion.allowed, () => {
+      gsap.fromTo(
+        ref.current,
+        { y: parallax.range * speed },
+        {
+          y: -parallax.range * speed,
+          ease: "none",
+          scrollTrigger: { trigger: ref.current, start: "top bottom", end: "bottom top", scrub: true },
+        },
+      );
+    });
+    return () => mm.revert();
+  });
+
   return (
-    <motion.div ref={ref} className={className} style={reduced ? undefined : { y }}>
+    <div ref={ref} className={className}>
       {children}
-    </motion.div>
+    </div>
   );
 }

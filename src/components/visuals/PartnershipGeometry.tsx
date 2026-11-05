@@ -1,21 +1,35 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useId, useRef } from "react";
+import { scrollMotion } from "@/config/motion";
+import { gsap, useGSAP } from "@/lib/gsap";
 import { cn } from "@/lib/utils/cn";
 
 /**
  * Two architectural frames that converge as the visitor scrolls — a visual
- * metaphor for partnership. Their intersection lights up when they meet.
+ * metaphor for partnership. Their shared intersection lights up as they meet.
+ * The static (no-JS / reduced-motion) state is the converged composition.
  */
 export function PartnershipGeometry({ className }: { className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const glowId = `pg-glow-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "center center"] });
-  const left = useTransform(scrollYProgress, [0, 1], [-46, 0]);
-  const right = useTransform(scrollYProgress, [0, 1], [46, 0]);
-  const glow = useTransform(scrollYProgress, [0.55, 1], [0, 1]);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(scrollMotion.allowed, () => {
+        const tl = gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: { trigger: ref.current, start: "top 85%", end: "center 55%", scrub: scrollMotion.scrub },
+        });
+        tl.from("[data-frame='left']", { x: -46 }, 0)
+          .from("[data-frame='right']", { x: 46 }, 0)
+          .from("[data-meet]", { opacity: 0, duration: 0.45 }, 0.55);
+      });
+      return () => mm.revert();
+    },
+    { scope: ref },
+  );
 
   return (
     <div ref={ref} className={cn("relative aspect-square w-full", className)}>
@@ -32,27 +46,22 @@ export function PartnershipGeometry({ className }: { className?: string }) {
         <line x1="20" y1="240" x2="460" y2="240" className="stroke-line" />
         <line x1="240" y1="20" x2="240" y2="460" className="stroke-line" />
 
-        <motion.circle cx="240" cy="240" r="120" fill={`url(#${glowId})`} style={reduced ? { opacity: 1 } : { opacity: glow }} />
+        <circle data-meet cx="240" cy="240" r="120" fill={`url(#${glowId})`} />
 
-        <motion.g style={reduced ? undefined : { x: left }}>
+        <g data-frame="left">
           <rect x="105" y="150" width="180" height="180" transform="rotate(45 195 240)" className="fill-surface/50 stroke-line-strong" strokeWidth="1.2" />
           <rect x="125" y="170" width="140" height="140" transform="rotate(45 195 240)" className="stroke-line" />
           <circle cx="68" cy="240" r="4" className="fill-fg/80" />
-        </motion.g>
+        </g>
 
-        <motion.g style={reduced ? undefined : { x: right }}>
+        <g data-frame="right">
           <rect x="195" y="150" width="180" height="180" transform="rotate(45 285 240)" className="fill-arch/40 stroke-accent-soft/70" strokeWidth="1.2" />
           <rect x="215" y="170" width="140" height="140" transform="rotate(45 285 240)" className="stroke-accent/30" />
           <circle cx="412" cy="240" r="4" className="fill-accent" />
-        </motion.g>
+        </g>
 
-        <motion.path
-          d="M240 177 L283 240 L240 303 L197 240 Z"
-          className="fill-accent/25 stroke-accent-soft"
-          strokeWidth="1.2"
-          style={reduced ? { opacity: 1 } : { opacity: glow }}
-        />
-        <motion.circle cx="240" cy="240" r="5" className="fill-contrast" style={reduced ? { opacity: 1 } : { opacity: glow }} />
+        <path data-meet d="M240 177 L283 240 L240 303 L197 240 Z" className="fill-accent/25 stroke-accent-soft" strokeWidth="1.2" />
+        <circle data-meet cx="240" cy="240" r="5" className="fill-contrast" />
       </svg>
     </div>
   );

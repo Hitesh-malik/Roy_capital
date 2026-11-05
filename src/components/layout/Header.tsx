@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { durations, ease } from "@/config/motion";
 import { headerCta, primaryNav } from "@/content/navigation";
 import { site } from "@/config/site";
 import { cn } from "@/lib/utils/cn";
+import { ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Wordmark } from "@/components/visuals/LogoMark";
@@ -16,7 +17,6 @@ const isActive = (pathname: string, href: string) => (href === "/" ? pathname ==
 
 export function Header() {
   const pathname = usePathname();
-  const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -29,12 +29,20 @@ export function Header() {
     setHidden(false);
   }
 
-  useMotionValueEvent(scrollY, "change", (y) => {
-    const prev = scrollY.getPrevious() ?? 0;
-    setScrolled(y > 24);
-    if (menuOpen) return;
-    setHidden(y > 480 && y > prev + 2);
-    if (y < prev - 2) setHidden(false);
+  // Scroll state (not a scrubbed animation): solid background after 24px,
+  // hide while reading downwards, reveal on any upward scroll. (No scroll
+  // events fire while the mobile menu is open: <html> is overflow:hidden.)
+  useGSAP(() => {
+    ScrollTrigger.create({
+      start: 0,
+      end: "max",
+      onUpdate: (self) => {
+        const y = self.scroll();
+        setScrolled(y > 24);
+        if (self.direction === 1 && y > 480) setHidden(true);
+        else if (self.direction === -1) setHidden(false);
+      },
+    });
   });
 
   return (
@@ -44,6 +52,7 @@ export function Header() {
           "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-(--rc-motion-medium) ease-premium",
           scrolled || menuOpen ? "border-line/70 bg-bg/80 backdrop-blur-xl" : "border-transparent bg-transparent",
         )}
+        style={{ viewTransitionName: "site-header" }}
         initial={{ y: -24, opacity: 0 }}
         animate={{ y: hidden ? "-100%" : 0, opacity: 1 }}
         transition={{ duration: durations.medium, ease: ease.premium }}
@@ -85,6 +94,9 @@ export function Header() {
           <div className="flex items-center gap-3">
             <ButtonLink href={headerCta.href} size="sm" className="hidden sm:inline-flex" icon="none">
               {headerCta.label}
+            </ButtonLink>
+            <ButtonLink href={headerCta.href} size="sm" className="px-4 sm:hidden" icon="none" aria-label={headerCta.label}>
+              Partner
             </ButtonLink>
             <MenuButton open={menuOpen} onToggle={() => setMenuOpen((o) => !o)} />
           </div>
@@ -177,7 +189,8 @@ function MobileMenu({ open, onClose, pathname }: { open: boolean; onClose: () =>
           role="dialog"
           aria-modal="true"
           aria-label="Site navigation"
-          className="fixed inset-0 z-40 overflow-y-auto bg-bg/95 pt-24 backdrop-blur-2xl xl:hidden"
+          data-lenis-prevent
+          className="fixed inset-0 z-40 overflow-y-auto overscroll-contain bg-bg/95 pt-24 backdrop-blur-2xl xl:hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

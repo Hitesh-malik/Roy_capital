@@ -5,9 +5,18 @@ import { theme } from "./theme";
  * Reusable motion presets. Durations, easing, travel distance and overall
  * intensity all come from `theme.motion`, so animation can be tuned globally.
  *
+ * Ownership — one system per property, never both:
+ * - Motion for React: mount / in-view reveals, presence (menus, accordions),
+ *   layout animations, hover and spring micro-interactions.
+ * - GSAP ScrollTrigger (`scrollMotion` below): anything scrubbed to scroll
+ *   position — parallax, line-draws, pinned / sequenced storytelling.
+ * - Lenis (`smoothScroll` below): wheel smoothing on fine-pointer devices,
+ *   driven by the GSAP ticker so ScrollTrigger stays in sync.
+ *
  * Reduced motion: the root `MotionConfig reducedMotion="user"` strips
  * transforms automatically; presets that animate non-transform properties
- * (clip-path) accept a `reduced` flag and fall back to opacity.
+ * (clip-path) accept a `reduced` flag and fall back to opacity. Scroll
+ * sequences only register under `scrollMotion.allowed`, and Lenis is off.
  */
 
 const m = theme.motion;
@@ -88,4 +97,24 @@ export const float3D = {
   floatIntensity: 0.35 * k,
   pointerTilt: 0.32 * k,
   damping: 0.55,
+};
+
+/** GSAP ScrollTrigger presets for scroll-scrubbed sequences. */
+export const scrollMotion = {
+  /** Media query that must match for scrubbed movement to register. */
+  allowed: "(prefers-reduced-motion: no-preference)",
+  desktop: "(min-width: 1024px)",
+  /** Seconds the scrubbed value takes to catch up with the scrollbar. */
+  scrub: 0.6,
+  /** Equivalent of `ease.premium` for GSAP tweens. */
+  ease: "power3.out",
+  heroExit: { y: -90 * k, fadeEnd: 0.75 },
+};
+
+/** Lenis smooth scrolling. Touch devices and reduced-motion users always keep native scroll. */
+export const smoothScroll = {
+  enabled: true,
+  lerp: 0.11,
+  wheelMultiplier: 1,
+  // Anchor jumps clear the fixed header via CSS `scroll-margin-top` (globals.css), which Lenis honours.
 };

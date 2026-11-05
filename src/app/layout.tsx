@@ -6,6 +6,7 @@ import { theme } from "@/config/theme";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { Providers } from "@/components/layout/Providers";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { ThemeStyle } from "@/components/layout/ThemeStyle";
 
 export const metadata: Metadata = {
@@ -51,7 +52,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-dvh">
         <a
           href="#main"
-          className="sr-only rounded-button bg-accent px-5 py-3 text-small font-semibold text-on-accent focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100]"
+          className="sr-only rounded-button bg-accent px-5 py-3 text-small font-semibold text-on-accent focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100"
         >
           Skip to content
         </a>
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c") }}
         />
         <Providers>
+          <SmoothScroll />
           <Header />
           <main id="main" tabIndex={-1} className="outline-none">
             {children}

@@ -3,7 +3,6 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Float, Lightformer, Line, PerformanceMonitor } from "@react-three/drei";
 import { easing } from "maath";
-import type { MotionValue } from "motion/react";
 import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { float3D } from "@/config/motion";
@@ -12,8 +11,8 @@ import { theme } from "@/config/theme";
 export type Quality = "high" | "low";
 
 export type IntelligenceCoreProps = {
-  /** 0 → 1 scroll progress through the hero. */
-  progress: MotionValue<number>;
+  /** 0 → 1 scroll progress through the hero (written by GSAP ScrollTrigger). */
+  progress: React.RefObject<number>;
   /** Normalised window pointer position (-1 → 1). */
   pointer: React.RefObject<{ x: number; y: number }>;
   active: boolean;
@@ -50,7 +49,7 @@ function Sculpture({ progress, pointer, quality }: Pick<IntelligenceCoreProps, "
 
   useFrame((_, rawDelta) => {
     const delta = Math.min(rawDelta, 0.05);
-    const p = progress.get();
+    const p = progress.current ?? 0;
     const ptr = pointer.current ?? { x: 0, y: 0 };
 
     if (spin.current) spin.current.rotation.y += delta * float3D.rotationSpeed;

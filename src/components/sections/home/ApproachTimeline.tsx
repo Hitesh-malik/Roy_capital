@@ -1,9 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useSpring } from "motion/react";
 import { useRef } from "react";
 import { approachSteps } from "@/content/approach";
 import { homePage } from "@/content/home";
+import { useStepSequence } from "@/lib/hooks/useStepSequence";
 import { Reveal } from "@/components/animations/Reveal";
 import { ArrowLink } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
@@ -11,12 +11,10 @@ import { SectionIntro } from "../SectionIntro";
 
 const d = homePage.approach;
 
-/** Understand → Explore → Apply → Grow with a scroll-drawn connecting line. */
+/** Understand → Explore → Apply → Grow: the line draws with scroll and each stage lights as it is reached. */
 export function ApproachTimeline() {
   const listRef = useRef<HTMLOListElement>(null);
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: listRef, offset: ["start 75%", "end 55%"] });
-  const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
+  useStepSequence(listRef, { axis: "y", start: "top 62%", end: "bottom 62%" });
 
   return (
     <Section tone="raised" aria-labelledby="approach-title" className="border-y border-line">
@@ -33,30 +31,26 @@ export function ApproachTimeline() {
         </div>
 
         <ol ref={listRef} className="relative lg:col-span-6 lg:col-start-7">
-          <span aria-hidden className="absolute top-2 bottom-2 left-[1.4rem] w-px bg-line" />
-          <motion.span
+          <span aria-hidden className="absolute top-5 bottom-5 left-[1.375rem] w-px bg-line" />
+          <span
             aria-hidden
-            className="absolute top-2 bottom-2 left-[1.4rem] w-px origin-top bg-linear-to-b from-accent to-accent-soft"
-            style={{ scaleY: reduced ? 1 : scaleY }}
+            data-seq-line="y"
+            className="absolute top-5 bottom-5 left-[1.375rem] w-px origin-top bg-linear-to-b from-accent to-accent-soft"
           />
           {approachSteps.map((step, i) => (
-            <motion.li
-              key={step.title}
-              className="relative grid grid-cols-[2.8rem_1fr] gap-6 pb-14 last:pb-0"
-              initial={{ opacity: 0.35 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ amount: 0.7, margin: "0px 0px -20% 0px" }}
-              transition={{ duration: 0.6 }}
-            >
-              <span className="relative z-10 grid size-11 place-items-center rounded-full border border-line-strong bg-bg-2 font-heading text-small font-semibold tabular-nums text-accent-soft">
+            <li key={step.title} data-seq-step className="group/step relative grid grid-cols-[2.75rem_1fr] gap-6 pb-14 last:pb-0">
+              <span
+                data-seq-marker
+                className="relative z-10 grid size-11 place-items-center rounded-full border border-accent bg-accent font-heading text-small font-semibold tabular-nums text-on-accent shadow-glow transition-[background-color,border-color,color,box-shadow] duration-(--rc-motion-medium) ease-premium group-data-[active=false]/step:border-line-strong group-data-[active=false]/step:bg-bg-2 group-data-[active=false]/step:text-subtle group-data-[active=false]/step:shadow-none"
+              >
                 {step.number}
               </span>
-              <div className="pt-1.5">
+              <div className="pt-1.5 transition-opacity duration-(--rc-motion-slow) ease-premium group-data-[active=false]/step:opacity-40">
                 <p className="text-label font-medium uppercase text-subtle">Stage {i + 1}</p>
                 <h3 className="mt-2 font-heading text-h2 font-semibold text-fg">{step.title}</h3>
                 <p className="mt-4 max-w-md text-muted">{step.body}</p>
               </div>
-            </motion.li>
+            </li>
           ))}
         </ol>
       </div>
