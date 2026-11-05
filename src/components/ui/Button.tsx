@@ -18,7 +18,7 @@ const variants: Record<Variant, string> = {
 const sizes: Record<Size, string> = {
   sm: "h-10 px-5 text-[0.6875rem]",
   md: "h-12 px-7 text-[0.75rem]",
-  lg: "h-14 px-8 text-[0.8125rem]",
+  lg: "min-h-14 px-6 py-3 text-[0.75rem] tracking-[0.08em] sm:px-8 sm:text-[0.8125rem] sm:tracking-[0.12em]",
 };
 
 type CommonProps = {
@@ -34,7 +34,7 @@ function Inner({ icon = "arrow", children }: Pick<CommonProps, "icon" | "childre
   const Icon = icon === "external" ? ArrowUpRight : ArrowRight;
   return (
     <>
-      <span className="relative">{children}</span>
+      <span className="relative inline-flex items-center gap-2.5">{children}</span>
       {icon !== "none" && (
         <Icon
           aria-hidden
@@ -47,7 +47,7 @@ function Inner({ icon = "arrow", children }: Pick<CommonProps, "icon" | "childre
 }
 
 export function buttonClasses({ variant = "primary", size = "md", className }: Pick<CommonProps, "variant" | "size" | "className">) {
-  return cn(base, variants[variant], sizes[size], className);
+  return cn(base, variants[variant], sizes[size], variant === "ghost" && "px-0", className);
 }
 
 type ButtonLinkProps = CommonProps & Omit<React.ComponentProps<typeof Link>, "className" | "children">;
