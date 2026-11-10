@@ -1,6 +1,6 @@
 import type { FAQ } from "@/content/faqs";
 import { Accordion } from "@/components/ui/Accordion";
-import { Section } from "@/components/ui/Section";
+import { Section, type SectionTone } from "@/components/ui/Section";
 import { SectionIntro } from "./SectionIntro";
 
 export function FaqSection({
@@ -16,7 +16,7 @@ export function FaqSection({
   title?: string;
   lead?: string;
   items: FAQ[];
-  tone?: "base" | "raised";
+  tone?: SectionTone;
 }) {
   if (items.length === 0) return null;
   return (

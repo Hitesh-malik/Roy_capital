@@ -21,14 +21,14 @@ export function ProcessFlow({ steps }: { steps: Step[] }) {
       <span
         aria-hidden
         data-seq-line="x"
-        className="absolute top-[1.375rem] right-[12.5%] left-[12.5%] hidden h-px origin-left bg-linear-to-r from-accent to-accent-soft lg:block"
+        className="absolute top-[1.375rem] right-[12.5%] left-[12.5%] hidden h-px origin-left bg-linear-to-r from-gold-deep via-gold to-gold-soft lg:block"
       />
       {/* mobile connector */}
       <span aria-hidden className="absolute top-5 bottom-5 left-[1.375rem] w-px bg-line lg:hidden" />
       <span
         aria-hidden
         data-seq-line="y"
-        className="absolute top-5 bottom-5 left-[1.375rem] w-px origin-top bg-linear-to-b from-accent to-accent-soft lg:hidden"
+        className="absolute top-5 bottom-5 left-[1.375rem] w-px origin-top bg-linear-to-b from-gold-deep via-gold to-gold-soft lg:hidden"
       />
 
       <Reveal as="ol" className="relative grid gap-10 lg:grid-cols-4 lg:gap-6">
@@ -36,7 +36,7 @@ export function ProcessFlow({ steps }: { steps: Step[] }) {
           <li key={s.number} data-seq-step className="group/step grid grid-cols-[2.75rem_1fr] gap-5 lg:grid-cols-1 lg:text-center">
             <span
               data-seq-marker
-              className="relative z-10 grid size-11 place-items-center rounded-full border border-accent bg-accent font-heading text-small font-semibold tabular-nums text-on-accent shadow-glow transition-[background-color,border-color,color,box-shadow,transform] duration-(--rc-motion-medium) ease-premium group-data-[active=false]/step:scale-90 group-data-[active=false]/step:border-line-strong group-data-[active=false]/step:bg-bg group-data-[active=false]/step:text-subtle group-data-[active=false]/step:shadow-none lg:mx-auto"
+              className="bg-gold-metal relative z-10 grid size-11 place-items-center rounded-full border border-gold-soft font-ui text-small font-bold tabular-nums text-navy shadow-glow transition-[background-color,border-color,color,box-shadow,transform] duration-(--rc-motion-medium) ease-premium group-data-[active=false]/step:scale-90 group-data-[active=false]/step:border-line-strong group-data-[active=false]/step:bg-none group-data-[active=false]/step:bg-bg group-data-[active=false]/step:text-subtle group-data-[active=false]/step:shadow-none lg:mx-auto"
             >
               {s.number}
             </span>

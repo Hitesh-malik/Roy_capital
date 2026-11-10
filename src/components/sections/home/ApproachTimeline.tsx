@@ -17,7 +17,8 @@ export function ApproachTimeline() {
   useStepSequence(listRef, { axis: "y", start: "top 62%", end: "bottom 62%" });
 
   return (
-    <Section tone="raised" aria-labelledby="approach-title" className="border-y border-line">
+    <Section tone="raised" aria-labelledby="approach-title" className="overflow-hidden">
+      <div aria-hidden className="radial-light pointer-events-none absolute inset-0 -z-10" />
       <div className="grid gap-16 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-32">
@@ -35,18 +36,18 @@ export function ApproachTimeline() {
           <span
             aria-hidden
             data-seq-line="y"
-            className="absolute top-5 bottom-5 left-[1.375rem] w-px origin-top bg-linear-to-b from-accent to-accent-soft"
+            className="absolute top-5 bottom-5 left-[1.375rem] w-px origin-top bg-linear-to-b from-gold-deep via-gold to-gold-soft"
           />
           {approachSteps.map((step, i) => (
             <li key={step.title} data-seq-step className="group/step relative grid grid-cols-[2.75rem_1fr] gap-6 pb-14 last:pb-0">
               <span
                 data-seq-marker
-                className="relative z-10 grid size-11 place-items-center rounded-full border border-accent bg-accent font-heading text-small font-semibold tabular-nums text-on-accent shadow-glow transition-[background-color,border-color,color,box-shadow] duration-(--rc-motion-medium) ease-premium group-data-[active=false]/step:border-line-strong group-data-[active=false]/step:bg-bg-2 group-data-[active=false]/step:text-subtle group-data-[active=false]/step:shadow-none"
+                className="bg-gold-metal relative z-10 grid size-11 place-items-center rounded-full border border-gold-soft font-ui text-small font-bold tabular-nums text-navy shadow-glow transition-[background-color,border-color,color,box-shadow] duration-(--rc-motion-medium) ease-premium group-data-[active=false]/step:border-line-strong group-data-[active=false]/step:bg-none group-data-[active=false]/step:bg-bg-2 group-data-[active=false]/step:text-subtle group-data-[active=false]/step:shadow-none"
               >
                 {step.number}
               </span>
               <div className="pt-1.5 transition-opacity duration-(--rc-motion-slow) ease-premium group-data-[active=false]/step:opacity-70">
-                <p className="text-label font-medium uppercase text-muted">Stage {i + 1}</p>
+                <p className="font-ui text-label font-semibold uppercase text-accent-soft">Stage {i + 1}</p>
                 <h3 className="mt-2 font-heading text-h2 font-semibold text-fg">{step.title}</h3>
                 <p className="mt-4 max-w-md text-muted">{step.body}</p>
               </div>

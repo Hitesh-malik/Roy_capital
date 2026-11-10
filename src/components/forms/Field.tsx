@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils/cn";
 import { formCopy } from "@/content/contact";
 
 const control =
-  "block w-full rounded-input border border-line bg-bg/60 px-4 text-body text-fg placeholder:text-subtle transition-[border-color,background-color,box-shadow] duration-(--rc-motion-fast) hover:border-line-strong focus:border-accent focus:bg-surface/50 focus:shadow-[0_0_0_3px_color-mix(in_oklab,var(--rc-color-accent)_22%,transparent)] focus:outline-none aria-[invalid=true]:border-danger/70";
+  "block w-full rounded-input border border-line-strong/70 bg-bg/60 px-4 text-body text-fg placeholder:text-subtle transition-[border-color,background-color,box-shadow] duration-(--rc-motion-fast) hover:border-line-strong focus:border-accent focus:bg-surface/50 focus:shadow-[0_0_0_3px_color-mix(in_oklab,var(--rc-color-accent)_22%,transparent)] focus:outline-none aria-[invalid=true]:border-danger/70";
 
 type FieldProps = {
   id: string;

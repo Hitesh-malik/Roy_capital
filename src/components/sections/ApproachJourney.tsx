@@ -60,10 +60,10 @@ export function ApproachJourney() {
     <div ref={ref} className="grid gap-12 lg:grid-cols-12">
       <div className="hidden lg:col-span-5 lg:block">
         <div className="sticky top-28">
-          <div className="relative overflow-hidden rounded-media border border-line bg-bg-2">
+          <div className="frame-gold relative overflow-hidden rounded-media bg-bg-2 shadow-lift">
             <ApproachGlyph stage={active} />
             <div className="absolute inset-x-0 bottom-0 flex items-center justify-between p-6" aria-live="polite">
-              <span className="text-label font-medium uppercase text-subtle">Stage {active + 1} / 4</span>
+              <span className="font-ui text-label font-semibold uppercase text-accent-soft">Stage {active + 1} / 4</span>
               <span className="font-heading text-h4 font-semibold text-fg">{approachSteps[active].title}</span>
             </div>
           </div>

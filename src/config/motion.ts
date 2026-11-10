@@ -66,7 +66,11 @@ export const presets = {
 
   imageReveal: (reduced: boolean, delay = 0): Variants =>
     reduced
-      ? { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { ...transitions.reveal, delay } } }
+      ? {
+          // clipPath is reset explicitly: the reduced flag can resolve after the first render.
+          hidden: { opacity: 0, clipPath: "inset(0% 0% 0% 0% round 1.25rem)" },
+          visible: { opacity: 1, clipPath: "inset(0% 0% 0% 0% round 1.25rem)", transition: { ...transitions.reveal, delay } },
+        }
       : {
           hidden: { clipPath: "inset(18% 12% 18% 12% round 1.25rem)", opacity: 0.4 },
           visible: {
