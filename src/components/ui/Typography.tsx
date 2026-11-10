@@ -19,14 +19,9 @@ export function Heading({ as: Tag = "h2", size = "h2", className, ...props }: He
   return <Tag className={cn("font-heading text-fg", headingSize[size], className)} {...props} />;
 }
 
-/** Editorial serif italic accent for words inside a heading. */
+/** Serif italic accent for words inside a heading — metallic gold on dark, bronze on light. */
 export function Em({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) {
-  return (
-    <span
-      className={cn("font-display font-normal italic tracking-normal text-accent-soft", className)}
-      {...props}
-    />
-  );
+  return <span className={cn("font-display font-medium italic tracking-normal text-gilt", className)} {...props} />;
 }
 
 type EyebrowProps = React.HTMLAttributes<HTMLParagraphElement> & { index?: string };
@@ -34,11 +29,11 @@ type EyebrowProps = React.HTMLAttributes<HTMLParagraphElement> & { index?: strin
 export function Eyebrow({ index, className, children, ...props }: EyebrowProps) {
   return (
     <p
-      className={cn("flex items-center gap-3 font-body text-label font-medium uppercase text-accent-soft", className)}
+      className={cn("flex items-center gap-3 font-ui text-label font-semibold uppercase text-accent-soft", className)}
       {...props}
     >
       {index && <span className="text-subtle tabular-nums">{index}</span>}
-      <span aria-hidden className="h-px w-8 bg-accent/60" />
+      <span aria-hidden className="h-px w-10 bg-linear-to-r from-gold to-gold/0" />
       <span>{children}</span>
     </p>
   );
@@ -67,5 +62,20 @@ export function Text({ size = "body", tone = "muted", className, ...props }: Tex
 }
 
 export function Label({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) {
-  return <span className={cn("text-label font-medium uppercase text-subtle", className)} {...props} />;
+  return <span className={cn("font-ui text-label font-semibold uppercase text-subtle", className)} {...props} />;
+}
+
+/** Gold-framed icon tile used on cards. Pair with `group` on the card for hover states. */
+export function IconBadge({ children, className }: { children: React.ReactNode; className?: string }) {
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        "relative grid size-12 shrink-0 place-items-center rounded-card border border-accent-soft/35 bg-accent-soft/[0.07] text-accent-soft transition-[background-color,border-color,color] duration-(--rc-motion-medium) ease-premium group-hover:border-accent-soft/70 group-hover:bg-accent-soft/[0.14] [&_svg]:size-5",
+        className,
+      )}
+    >
+      {children}
+    </span>
+  );
 }

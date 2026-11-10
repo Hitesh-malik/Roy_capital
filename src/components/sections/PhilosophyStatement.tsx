@@ -39,7 +39,7 @@ export function PhilosophyStatement({ lines, className }: { lines: string[]; cla
         <span
           key={line}
           data-line
-          className={cn("block", i % 2 === 1 ? "font-display font-normal italic tracking-normal text-accent-soft" : "text-fg")}
+          className={cn("block", i % 2 === 1 ? "font-display font-medium italic tracking-normal text-gilt" : "text-fg")}
         >
           {line}
         </span>

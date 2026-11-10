@@ -5,7 +5,9 @@ import { programs } from "@/content/programs";
 import { Reveal, Stagger, StaggerItem } from "@/components/animations/Reveal";
 import { ArrowLink } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
+import { IconBadge } from "@/components/ui/Typography";
 import { GeometricPanel } from "@/components/visuals/GeometricPanel";
+import { ProgramIcon } from "@/components/visuals/ProgramIcon";
 import { SectionIntro } from "../SectionIntro";
 
 const d = homePage.learning;
@@ -16,7 +18,8 @@ const d = homePage.learning;
  */
 export function LearningAreas() {
   return (
-    <Section tone="raised" aria-labelledby="learning-title" className="border-y border-line">
+    <Section tone="navy" aria-labelledby="learning-title" className="overflow-hidden">
+      <div aria-hidden className="dot-grid pointer-events-none absolute inset-0 -z-10 opacity-40" />
       <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <div id="learning-title">
           <SectionIntro eyebrow={d.eyebrow} index="02" title={[d.title]} body={d.body} />
@@ -35,17 +38,22 @@ export function LearningAreas() {
           >
             <Link
               href={`/programs#${p.slug}`}
-              className="group relative flex h-full flex-col overflow-hidden rounded-card border border-line bg-bg p-7 transition-[border-color,background-color,box-shadow] duration-(--rc-motion-medium) ease-premium hover:border-line-strong hover:bg-surface/40 hover:shadow-lift md:p-9"
+              className="group relative flex h-full flex-col overflow-hidden rounded-card border border-line bg-linear-to-b from-surface/70 to-bg-2/80 p-7 backdrop-blur-sm transition-[border-color,background-color,box-shadow] duration-(--rc-motion-medium) ease-premium hover:border-gold/55 hover:shadow-lift md:p-9"
             >
               <span
                 aria-hidden
-                className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-linear-to-r from-accent to-accent-soft transition-transform duration-(--rc-motion-slow) ease-premium group-hover:scale-x-100"
+                className="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-linear-to-r from-gold-deep via-gold-soft to-gold transition-transform duration-(--rc-motion-slow) ease-premium group-hover:scale-x-100"
               />
               <div className="flex items-start justify-between">
-                <span className="font-heading text-h3 font-semibold tabular-nums text-subtle transition-colors group-hover:text-accent-soft">
-                  {p.number}
+                <span className="flex items-center gap-4">
+                  <IconBadge>
+                    <ProgramIcon slug={p.slug} />
+                  </IconBadge>
+                  <span className="font-display text-h3 font-semibold text-subtle italic tabular-nums transition-colors group-hover:text-gold-soft">
+                    {p.number}
+                  </span>
                 </span>
-                <span className="grid size-11 place-items-center rounded-full border border-line-strong text-muted transition-[transform,color,border-color,background-color] duration-(--rc-motion-medium) ease-premium group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:border-accent group-hover:bg-accent group-hover:text-on-accent">
+                <span className="grid size-11 place-items-center rounded-full border border-line-strong text-muted transition-[transform,color,border-color,background-color] duration-(--rc-motion-medium) ease-premium group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:border-gold group-hover:bg-gold group-hover:text-navy">
                   <ArrowUpRight className="size-4" strokeWidth={1.75} />
                 </span>
               </div>
@@ -58,7 +66,7 @@ export function LearningAreas() {
               <div className="mt-auto">
                 <h3 className="font-heading text-h3 font-semibold text-fg">{p.title}</h3>
                 <p className="mt-3 max-w-md text-muted">{p.summary}</p>
-                <span className="mt-6 inline-flex items-center gap-2 font-heading text-small font-semibold uppercase tracking-[0.12em] text-accent-soft">
+                <span className="mt-6 inline-flex items-center gap-2 font-ui text-[0.75rem] font-bold uppercase tracking-[0.14em] text-accent-soft">
                   {p.homeCta}
                 </span>
               </div>

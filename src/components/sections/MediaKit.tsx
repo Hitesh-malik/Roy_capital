@@ -19,7 +19,7 @@ export function MediaKit() {
       <a
         href={kit.href}
         download
-        className="inline-flex h-12 items-center gap-2.5 rounded-button border border-line-strong px-6 font-heading text-[0.75rem] font-semibold tracking-[0.12em] text-fg uppercase transition-colors hover:border-accent-soft/60 hover:bg-surface"
+        className="inline-flex h-12 items-center gap-2.5 rounded-button border border-line-strong px-6 font-ui text-[0.75rem] font-semibold tracking-[0.12em] text-fg uppercase transition-colors hover:border-accent-soft/60 hover:bg-surface"
       >
         <Download aria-hidden className="size-4" />
         Download

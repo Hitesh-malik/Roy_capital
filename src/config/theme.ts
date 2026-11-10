@@ -11,7 +11,7 @@
  */
 
 export type ThemeColors = {
-  /** Page background — the deepest blue-black. */
+  /** Page / section background. */
   bg: string;
   /** Alternate section background. */
   bgSecondary: string;
@@ -60,7 +60,7 @@ export type Theme = {
   three: ThreeColors;
   typography: {
     /** CSS font-family values. Font loading lives in `src/config/fonts.ts`. */
-    fonts: { heading: string; body: string; display: string };
+    fonts: { heading: string; body: string; display: string; ui: string };
     weights: { regular: number; medium: number; semibold: number; bold: number };
     /** Responsive type scale: [size, line-height, letter-spacing]. */
     scale: Record<
@@ -87,30 +87,62 @@ export type Theme = {
   };
 };
 
+/**
+ * Fixed brand palette sampled from the Roy Capital emblem
+ * (public/brand/roy-capital-emblem.png). These never change per section.
+ */
+export const brand = {
+  /** Emblem field — the deep navy the logo sits on. */
+  navy: "#051225",
+  navyDeep: "#020A18",
+  /** Royal blue used for light-section CTAs and blue gradients. */
+  royal: "#12357A",
+  royalBright: "#2F63C4",
+  /** Gold ramp from the emblem ring: bronze → brand gold → highlight. */
+  goldBronze: "#8A6222",
+  goldDeep: "#A57545",
+  gold: "#E1B355",
+  goldSoft: "#F0D294",
+  goldHighlight: "#FEDFA6",
+  ivory: "#F7F4EC",
+  paper: "#FFFFFF",
+} as const;
+
+export type Brand = typeof brand;
+
+/**
+ * Section tones. Each tone re-declares the colour variables inside a scope
+ * (`.tone-ivory`, `.tone-paper`, `.tone-royal`, `.tone-dark`), so every
+ * component reads the right colours without knowing where it is placed.
+ */
+export type ToneName = "dark" | "ivory" | "paper" | "royal";
+export type Tone = { colorScheme: "dark" | "light"; colors: Partial<ThemeColors>; shadows?: Partial<Theme["shadows"]> };
+
 const sharedTypography: Theme["typography"] = {
   fonts: {
-    heading: "var(--font-manrope), ui-sans-serif, system-ui, sans-serif",
+    heading: "var(--font-cormorant), ui-serif, Georgia, serif",
     body: "var(--font-inter), ui-sans-serif, system-ui, sans-serif",
-    display: "var(--font-instrument), ui-serif, Georgia, serif",
+    display: "var(--font-cormorant), ui-serif, Georgia, serif",
+    ui: "var(--font-manrope), ui-sans-serif, system-ui, sans-serif",
   },
   weights: { regular: 400, medium: 500, semibold: 600, bold: 700 },
   scale: {
-    display: ["clamp(2.6rem, 1.5rem + 4.2vw, 5rem)", "1.02", "-0.035em"],
-    h1: ["clamp(2.5rem, 1.7rem + 3.6vw, 4.75rem)", "1.05", "-0.03em"],
-    h2: ["clamp(2rem, 1.45rem + 2.4vw, 3.5rem)", "1.08", "-0.025em"],
-    h3: ["clamp(1.375rem, 1.15rem + 0.9vw, 1.875rem)", "1.2", "-0.015em"],
-    h4: ["clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem)", "1.35", "-0.01em"],
-    lead: ["clamp(1.125rem, 1.04rem + 0.4vw, 1.375rem)", "1.6", "-0.005em"],
-    body: ["1rem", "1.7", "0em"],
+    display: ["clamp(3rem, 1.55rem + 5.2vw, 6.25rem)", "1.0", "-0.02em"],
+    h1: ["clamp(2.75rem, 1.75rem + 4vw, 5.25rem)", "1.04", "-0.015em"],
+    h2: ["clamp(2.25rem, 1.6rem + 2.7vw, 3.875rem)", "1.08", "-0.012em"],
+    h3: ["clamp(1.625rem, 1.38rem + 1vw, 2.125rem)", "1.15", "-0.005em"],
+    h4: ["clamp(1.3125rem, 1.22rem + 0.35vw, 1.5rem)", "1.3", "0em"],
+    lead: ["clamp(1.0625rem, 1rem + 0.35vw, 1.3125rem)", "1.65", "-0.003em"],
+    body: ["1rem", "1.72", "0em"],
     small: ["0.875rem", "1.6", "0em"],
-    label: ["0.75rem", "1.4", "0.16em"],
+    label: ["0.75rem", "1.4", "0.18em"],
   },
 };
 
 const sharedLayout: Theme["layout"] = {
-  containerWidth: "1280px",
+  containerWidth: "1320px",
   gutter: "clamp(1.25rem, 0.6rem + 3vw, 3rem)",
-  sectionSpacing: "clamp(5rem, 3.5rem + 6vw, 9.5rem)",
+  sectionSpacing: "clamp(5rem, 3.5rem + 6vw, 9rem)",
   sectionSpacingTight: "clamp(3.5rem, 2.5rem + 4vw, 6rem)",
 };
 
@@ -122,95 +154,114 @@ const sharedMotion: Theme["motion"] = {
   stagger: 0.08,
 };
 
-/** Default launch theme. */
-const midnight: Theme = {
-  name: "Midnight Blue",
+/** Default launch theme — taken from the emblem: navy field, gold ring. */
+const navyGold: Theme = {
+  name: "Roy Navy & Gold",
   colorScheme: "dark",
   colors: {
-    bg: "#050A13",
-    bgSecondary: "#0A1628",
-    surface: "#102038",
-    architectural: "#142C4D",
-    accent: "#4C8DFF",
-    accentSoft: "#8DB8FF",
-    onAccent: "#040B16",
-    warm: "#D2B98B",
-    text: "#E8F0FA",
-    textMuted: "#A2B1C6",
-    textSubtle: "#7C8EA9",
-    border: "#263951",
-    borderStrong: "#3A5373",
+    bg: brand.navy,
+    bgSecondary: "#081A35",
+    surface: "#0D2347",
+    architectural: "#132E5C",
+    accent: brand.gold,
+    accentSoft: brand.goldSoft,
+    onAccent: "#071328",
+    warm: "#E2C48E",
+    text: "#F3F5FA",
+    textMuted: "#B0BBCE",
+    textSubtle: "#8593AC",
+    border: "#1B3158",
+    borderStrong: "#2D4876",
     contrast: "#FFFFFF",
     danger: "#FF8A8A",
   },
   three: {
-    core: "#1B2C47",
-    ring: "#A9BAD3",
-    lattice: "#8DB8FF",
-    orbit: "#4C8DFF",
-    node: "#DCE8FA",
-    keyLight: "#E8F0FA",
-    rimLight: "#4C8DFF",
+    core: "#0B1F44",
+    ring: brand.gold,
+    lattice: "#C9A35A",
+    orbit: brand.gold,
+    node: brand.goldHighlight,
+    keyLight: "#FFF4DD",
+    rimLight: brand.royalBright,
   },
   typography: sharedTypography,
   layout: sharedLayout,
-  radii: { card: "1rem", button: "999px", input: "0.625rem", media: "1.25rem" },
+  radii: { card: "0.375rem", button: "0.25rem", input: "0.25rem", media: "0.5rem" },
   shadows: {
     card: "0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 24px 48px -24px rgb(0 0 0 / 0.6)",
-    lift: "0 1px 0 0 rgb(255 255 255 / 0.06) inset, 0 32px 64px -24px rgb(0 0 0 / 0.75)",
-    glow: "0 0 0 1px rgb(76 141 255 / 0.35), 0 12px 40px -12px rgb(76 141 255 / 0.55)",
+    lift: "0 1px 0 0 rgb(255 255 255 / 0.06) inset, 0 32px 64px -24px rgb(0 0 0 / 0.75), 0 0 0 1px rgb(225 179 85 / 0.18)",
+    glow: "0 0 0 1px rgb(225 179 85 / 0.45), 0 14px 40px -12px rgb(225 179 85 / 0.55)",
   },
   motion: sharedMotion,
 };
 
-/** Configuration example — not visually tuned for launch. */
-const monochrome: Theme = {
-  ...midnight,
-  name: "Monochrome Black",
-  colors: {
-    ...midnight.colors,
-    bg: "#070707",
-    bgSecondary: "#0F0F10",
-    surface: "#18181A",
-    architectural: "#222225",
-    accent: "#F2F2F2",
-    accentSoft: "#BDBDBD",
-    onAccent: "#070707",
-    border: "#2A2A2D",
-    borderStrong: "#45454A",
-    textMuted: "#A6A6AB",
-    textSubtle: "#7C7C82",
-  },
-  three: { ...midnight.three, core: "#1C1C1F", ring: "#C8C8CC", lattice: "#BDBDBD", orbit: "#8A8A90", rimLight: "#FFFFFF" },
+const lightText: Partial<ThemeColors> = {
+  accent: brand.royal,
+  accentSoft: brand.goldBronze,
+  onAccent: "#FFFFFF",
+  warm: brand.goldBronze,
+  text: "#0A1A33",
+  textMuted: "#44536B",
+  textSubtle: "#5E6B82",
+  contrast: brand.navy,
+  danger: "#B42318",
 };
 
-/** Configuration example — not visually tuned for launch. */
-const lightCorporate: Theme = {
-  ...midnight,
-  name: "Light Corporate",
-  colorScheme: "light",
-  colors: {
-    bg: "#F6F8FB",
-    bgSecondary: "#EDF1F7",
-    surface: "#FFFFFF",
-    architectural: "#E2E9F3",
-    accent: "#1F5FD6",
-    accentSoft: "#2F6FE6",
-    onAccent: "#FFFFFF",
-    warm: "#9A7A45",
-    text: "#0A1628",
-    textMuted: "#41526B",
-    textSubtle: "#5F708A",
-    border: "#D5DDE8",
-    borderStrong: "#B6C3D4",
-    contrast: "#000000",
-    danger: "#C0262D",
+const lightShadows: Partial<Theme["shadows"]> = {
+  card: "0 1px 2px rgb(10 26 51 / 0.05), 0 18px 40px -22px rgb(10 26 51 / 0.22)",
+  lift: "0 2px 4px rgb(10 26 51 / 0.04), 0 34px 60px -28px rgb(10 26 51 / 0.38), 0 0 0 1px rgb(165 117 69 / 0.22)",
+  glow: "0 0 0 1px rgb(18 53 122 / 0.4), 0 14px 36px -14px rgb(18 53 122 / 0.55)",
+};
+
+/** Section tones for the default theme (see `ToneName`). */
+export const tones: Record<ToneName, Tone> = {
+  dark: { colorScheme: "dark", colors: navyGold.colors, shadows: navyGold.shadows },
+  ivory: {
+    colorScheme: "light",
+    colors: {
+      ...lightText,
+      bg: brand.ivory,
+      bgSecondary: "#FFFFFF",
+      surface: "#FFFFFF",
+      architectural: "#EDE6D6",
+      border: "#E2D9C6",
+      borderStrong: "#C9B992",
+    },
+    shadows: lightShadows,
+  },
+  paper: {
+    colorScheme: "light",
+    colors: {
+      ...lightText,
+      bg: brand.paper,
+      bgSecondary: "#F4F6FA",
+      surface: "#FFFFFF",
+      architectural: "#E8EDF5",
+      border: "#E1E6EF",
+      borderStrong: "#BFC9DA",
+    },
+    shadows: lightShadows,
+  },
+  royal: {
+    colorScheme: "dark",
+    colors: {
+      ...navyGold.colors,
+      bg: "#0B2552",
+      bgSecondary: "#0E2C5F",
+      surface: "#12336B",
+      architectural: "#183D7C",
+      textMuted: "#BCC7DB",
+      textSubtle: "#97A6C2",
+      border: "#24467F",
+      borderStrong: "#39609E",
+    },
+    shadows: navyGold.shadows,
   },
 };
 
-export const themePresets = { midnight, monochrome, lightCorporate } as const;
+export const themePresets = { navyGold } as const;
 export type ThemeName = keyof typeof themePresets;
 
 /** Switch the whole site's theme here. */
-export const activeThemeName: ThemeName = "midnight";
+export const activeThemeName: ThemeName = "navyGold";
 export const theme: Theme = themePresets[activeThemeName];

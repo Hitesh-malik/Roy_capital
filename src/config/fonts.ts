@@ -1,10 +1,21 @@
-import { Inter, Instrument_Serif, Manrope } from "next/font/google";
+import { Cormorant_Garamond, Inter, Manrope } from "next/font/google";
 
 /**
  * Font loading. Each font exposes a CSS variable that `theme.typography.fonts`
- * assigns to a role (heading / body / display). To change a font, swap the
- * import here and keep the variable name — or point the role at a new one.
+ * assigns to a role:
+ * - heading / display → Cormorant Garamond, a classical serif that echoes the
+ *   "Roy Capital" lettering in the emblem.
+ * - body → Inter, for long-form readability.
+ * - ui → Manrope, for navigation, buttons, labels and numerals.
  */
+export const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
+
 export const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-manrope",
@@ -17,12 +28,4 @@ export const inter = Inter({
   display: "swap",
 });
 
-export const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-instrument",
-  display: "swap",
-});
-
-export const fontVariables = [manrope.variable, inter.variable, instrumentSerif.variable].join(" ");
+export const fontVariables = [cormorant.variable, manrope.variable, inter.variable].join(" ");

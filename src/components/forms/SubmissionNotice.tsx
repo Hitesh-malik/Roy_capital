@@ -46,7 +46,7 @@ export function SubmissionNotice({ summary, onEdit }: { summary: string; onEdit:
           </h3>
           <p className="mt-2 text-muted">{formCopy.unavailable.body}</p>
           <p className="mt-4 text-small text-subtle">Email</p>
-          <p className="font-heading text-h4 font-semibold break-all text-fg select-all">{site.email}</p>
+          <p className="font-ui text-[1.125rem] font-semibold break-all text-fg select-all">{site.email}</p>
         </div>
       </div>
 

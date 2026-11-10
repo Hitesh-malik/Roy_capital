@@ -1,12 +1,17 @@
 import { ImageResponse } from "next/og";
+import { join } from "node:path";
+import { readFile } from "node:fs/promises";
 import { site } from "@/config/site";
-import { theme } from "@/config/theme";
+import { brand, theme } from "@/config/theme";
 
 export const alt = site.title;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const c = theme.colors;
+
+const emblemData = await readFile(join(process.cwd(), "public/brand/roy-capital-emblem.png"), "base64");
+const emblemSrc = `data:image/png;base64,${emblemData}`;
 
 export default function OpengraphImage() {
   return new ImageResponse(
@@ -16,30 +21,31 @@ export default function OpengraphImage() {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
+          alignItems: "center",
           justifyContent: "space-between",
           padding: 72,
-          background: `radial-gradient(ellipse 60% 70% at 78% 40%, ${c.architectural}, ${c.bg} 70%)`,
+          background: `radial-gradient(ellipse 60% 80% at 80% 45%, ${brand.royal}, ${brand.navy} 70%)`,
           color: c.text,
-          fontFamily: "sans-serif",
+          fontFamily: "serif",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <div style={{ width: 40, height: 40, borderRadius: 999, border: `2px solid ${c.accentSoft}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <div style={{ width: 16, height: 16, background: c.accent, transform: "rotate(45deg)" }} />
+        <div style={{ display: "flex", flexDirection: "column", maxWidth: 640 }}>
+          <div style={{ display: "flex", fontSize: 20, letterSpacing: 6, color: brand.goldSoft, fontFamily: "sans-serif" }}>
+            {site.wordmark}
           </div>
-          <div style={{ fontSize: 26, letterSpacing: 8, fontWeight: 700 }}>{site.wordmark}</div>
+          <div style={{ display: "flex", width: 80, height: 2, background: brand.gold, marginTop: 24 }} />
+          <div style={{ display: "flex", fontSize: 64, fontWeight: 700, lineHeight: 1.05, marginTop: 36 }}>
+            Building Financial Intelligence.
+          </div>
+          <div style={{ display: "flex", fontSize: 64, lineHeight: 1.1, color: brand.gold, fontStyle: "italic" }}>
+            Creating a Better Tomorrow.
+          </div>
+          <div style={{ display: "flex", fontSize: 22, color: c.textMuted, marginTop: 36, fontFamily: "sans-serif" }}>
+            {site.values}
+          </div>
         </div>
-
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 76, fontWeight: 700, lineHeight: 1.04, letterSpacing: -2 }}>Building Financial Intelligence.</div>
-          <div style={{ fontSize: 76, fontWeight: 400, lineHeight: 1.1, color: c.accentSoft, fontStyle: "italic" }}>Creating a Better Tomorrow.</div>
-        </div>
-
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 22, color: c.textMuted, borderTop: `1px solid ${c.border}`, paddingTop: 28 }}>
-          <span>{site.values}</span>
-          <span style={{ color: c.accentSoft }}>Sponsorships & Partnerships</span>
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element -- ImageResponse renders plain <img> */}
+        <img src={emblemSrc} width={380} height={380} alt="" style={{ borderRadius: 999, boxShadow: `0 0 0 2px ${brand.gold}` }} />
       </div>
     ),
     size,

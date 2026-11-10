@@ -56,7 +56,7 @@ export function PartnershipForm({ className }: { className?: string }) {
             {partnershipInterests.map((interest) => (
               <label key={interest} className="group relative cursor-pointer">
                 <input type="radio" value={interest} className="peer sr-only" {...register("interest")} />
-                <span className="inline-flex h-11 items-center rounded-button border border-line px-5 text-small text-muted transition-[border-color,background-color,color] duration-(--rc-motion-fast) group-hover:border-line-strong group-hover:text-fg peer-checked:border-accent peer-checked:bg-accent/15 peer-checked:text-fg peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent">
+                <span className="inline-flex h-11 items-center rounded-button border border-line-strong/70 px-5 text-small text-muted transition-[border-color,background-color,color] duration-(--rc-motion-fast) group-hover:border-line-strong group-hover:text-fg peer-checked:border-accent peer-checked:bg-accent/15 peer-checked:text-fg peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent">
                   {interest}
                 </span>
               </label>
