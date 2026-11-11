@@ -11,6 +11,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { ButtonLink } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
 import { Em, Text } from "@/components/ui/Typography";
+import { InstagramIcon } from "@/components/visuals/InstagramIcon";
 
 export const metadata = pageMetadata({
   title: "Contact",
@@ -44,6 +45,23 @@ export default function ContactPage() {
                 <Text className="mt-2">{d.direct.note}</Text>
                 <p className="mt-3 font-ui text-[1.125rem] font-semibold break-all text-fg select-all">{site.email}</p>
               </div>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <a
+                href={site.instagram.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 rounded-card border border-line bg-surface p-5 shadow-card transition-colors duration-(--rc-motion-medium) hover:border-gold/55"
+              >
+                <span className="grid size-11 shrink-0 place-items-center rounded-full bg-royal text-gold-soft transition-colors group-hover:bg-gold group-hover:text-navy">
+                  <InstagramIcon className="size-5" strokeWidth={1.6} />
+                </span>
+                <span className="min-w-0">
+                  <span className="block font-ui text-label font-semibold uppercase text-subtle">Follow on Instagram</span>
+                  <span className="mt-0.5 block font-ui font-semibold text-fg">{site.instagram.handle}</span>
+                </span>
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
             </Reveal>
             <Reveal delay={0.1} className="rounded-card border border-line bg-surface p-7 shadow-card">
               <span className="grid size-11 place-items-center rounded-full bg-royal text-gold-soft">

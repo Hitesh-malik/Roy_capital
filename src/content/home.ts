@@ -57,6 +57,44 @@ export const homePage = {
     body: "Our community initiatives reflect our belief in creating a positive impact beyond business. Through meaningful engagement and philanthropic efforts, we aim to contribute to causes that bring support, opportunity and hope to people who need it.",
     cta: { label: "See Our Community Initiatives", href: "/impact" },
   },
+  /** Drawn from the official Instagram (@roycapitalgrp). Update when new posts are worth featuring. */
+  social: {
+    eyebrow: "From Our Instagram",
+    title: "Learn Smart. Grow Smarter.",
+    body: "Money. Business. Wealth. On Instagram we break finance and entrepreneurship down into short, practical lessons for future founders.",
+    cta: { label: "Follow @roycapitalgrp" },
+    posts: [
+      {
+        topic: "Business Strategy",
+        title: "A Good Idea Is Only the Beginning. The Right Strategy Makes It Grow.",
+        points: [
+          "Identify the problem",
+          "Validate market demand",
+          "Understand your audience",
+          "Test before investing big",
+        ],
+        closing: "Think smart. Validate first. Grow strategically.",
+        tags: ["BusinessGrowth", "MarketResearch", "StrategicGrowth"],
+        href: "https://www.instagram.com/p/DfkPLtvBGNK/",
+      },
+      {
+        topic: "Future Founders",
+        title: "Every Great Entrepreneur Starts with a Willingness to Learn.",
+        points: ["Understand Business.", "Build Confidence.", "Turn Ideas Into Action."],
+        closing: "Your journey towards business success starts here.",
+        tags: ["FutureFounders", "BusinessLearning", "FinancialLiteracy"],
+        href: "https://www.instagram.com/p/DfJqOZ-JmhS/",
+      },
+      {
+        topic: "Welcome",
+        title: "Welcome to the Roy Capital World.",
+        points: ["Understand Money.", "Master Business.", "Build Your Future."],
+        closing: "Your journey towards smarter business decisions starts here.",
+        tags: ["BusinessEducation", "Entrepreneurship", "BuildYourWealth"],
+        href: "https://www.instagram.com/p/DfFnQC_hlvl/",
+      },
+    ],
+  },
   closing: {
     eyebrow: "Partner with Roy Capital",
     title: "Let's Create Something Meaningful Together.",

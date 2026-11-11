@@ -21,8 +21,16 @@ export const site = {
   /** Shown as plain text only (no mail links, no mail sending). */
   email: "hello@roycapital.com",
 
+  /** Official Instagram profile (verified). */
+  instagram: {
+    handle: "@roycapitalgrp",
+    href: "https://www.instagram.com/roycapitalgrp/",
+    /** Profile bio, kept in sync with Instagram. */
+    bio: ["Money. Business. Wealth.", "Simplifying Finance & Entrepreneurship", "Learn Smart. Grow Smarter."],
+  },
+
   /** Add verified profiles only. Empty = section hidden. */
-  socials: [] as SocialLink[],
+  socials: [{ label: "Instagram", href: "https://www.instagram.com/roycapitalgrp/" }] as SocialLink[],
 
   /**
    * Sponsorship deck / media kit. Keep `null` until an approved file exists;

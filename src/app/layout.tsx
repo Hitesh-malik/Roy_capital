@@ -38,6 +38,7 @@ const organizationJsonLd = {
   url: site.url,
   description: site.description,
   slogan: site.tagline,
+  sameAs: site.socials.map((s) => s.href),
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

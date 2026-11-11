@@ -4,6 +4,7 @@ import { site } from "@/config/site";
 import { footerNav } from "@/content/navigation";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { InstagramIcon } from "@/components/visuals/InstagramIcon";
 import { Emblem } from "@/components/visuals/LogoMark";
 
 function FooterLinks({ title, links }: { title: string; links: { label: string; href: string }[] }) {
@@ -73,11 +74,23 @@ export function Footer() {
                 <p className="mt-1 text-small font-medium break-all text-fg select-all">{site.email}</p>
               </div>
               {site.socials.length > 0 && (
-                <ul className="mt-6 space-y-3">
+                <ul className="mt-5 space-y-3">
                   {site.socials.map((s) => (
                     <li key={s.href}>
-                      <a href={s.href} target="_blank" rel="noopener noreferrer" className="text-small text-muted hover:text-fg">
-                        {s.label}
+                      <a
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/so flex items-center gap-3 rounded-card border border-gold/20 bg-surface/40 p-4 transition-colors duration-(--rc-motion-fast) hover:border-gold/50"
+                      >
+                        <span className="grid size-10 shrink-0 place-items-center rounded-full border border-gold/40 text-gold-soft transition-colors group-hover/so:bg-gold group-hover/so:text-navy">
+                          <InstagramIcon className="size-4" />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block font-ui text-label font-semibold uppercase text-subtle">{s.label}</span>
+                          <span className="mt-0.5 block text-small font-medium text-fg">{site.instagram.handle}</span>
+                        </span>
+                        <span className="sr-only">(opens in a new tab)</span>
                       </a>
                     </li>
                   ))}

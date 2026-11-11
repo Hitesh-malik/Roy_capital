@@ -66,6 +66,7 @@ export const programs: Program[] = [
     body: "Entrepreneurship is about identifying opportunities, solving problems and turning ideas into meaningful ventures. Explore the fundamentals of business, strategic thinking and the decisions that help businesses develop and grow.",
     topics: [
       "Business fundamentals",
+      "Validating ideas and market demand before investing",
       "Understanding business models",
       "Strategic thinking and planning",
       "Leadership and decision-making",
